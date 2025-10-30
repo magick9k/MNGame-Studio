@@ -1,14 +1,15 @@
-// Pobierz przycisk
-const downloadBtn = document.getElementById('download-btn');
+// Przycisk Tutorial otwiera YouTube
 const tutorialBtn = document.getElementById('tutorial-btn');
+if (tutorialBtn) {
+  tutorialBtn.addEventListener('click', () => {
+    window.open('https://www.youtube.com/watch?v=7RBzlzVCM8E', '_blank');
+  });
+}
 
-// Obsługa kliknięcia Pobierz
-downloadBtn.addEventListener('click', () => {
-  window.location.href = "https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw";
-});
-
-// Obsługa kliknięcia Tutorial
-tutorialBtn.addEventListener('click', () => {
-  // Tutaj możesz wstawić swój link do tutoriala
-  window.location.href = "https://example.com/tutorial";
-});
+// Przycisk Pobierz otwiera link do Mega
+const downloadBtn = document.getElementById('download-btn');
+if (downloadBtn) {
+  downloadBtn.addEventListener('click', () => {
+    window.open('https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw', '_blank');
+  });
+}
