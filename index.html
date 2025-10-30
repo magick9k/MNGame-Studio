@@ -90,6 +90,18 @@
     <a class="download-btn" href="https://discord.gg/qVRYthYAQM" target="_blank" rel="noopener noreferrer">Discord</a>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    // Przycisk Tutorial otwiera YouTube
+    const tutorialBtn = document.getElementById('tutorial-btn');
+    tutorialBtn.addEventListener('click', () => {
+      window.open('https://www.youtube.com/watch?v=7RBzlzVCM8E', '_blank');
+    });
+
+    // Tu możesz dodać funkcjonalność przycisku Pobierz
+    const downloadBtn = document.getElementById('download-btn');
+    downloadBtn.addEventListener('click', () => {
+      window.open('https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw', '_blank');
+    });
+  </script>
 </body>
 </html>
