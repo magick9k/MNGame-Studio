@@ -59,6 +59,8 @@
       color: white;
       text-decoration: none;
       cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 5px;
     }
 
     .download-btn:hover { background-color: #0056b3; }
@@ -83,11 +85,11 @@
   </section>
 
   <div class="buttons">
-    <!-- Teraz jest zwykły button — skrypt obsłuży kliknięcie i przekieruje -->
-    <button class="download-btn">Pobierz</button>
+    <button class="download-btn" id="download-btn">Pobierz</button>
+    <button class="download-btn" id="tutorial-btn">Tutorial</button>
+    <a class="download-btn" href="https://discord.gg/qVRYthYAQM" target="_blank" rel="noopener noreferrer">Discord</a>
   </div>
 
-  <!-- Podłącz skrypt (upewnij się, że script.js jest w tym samym folderze co index.html) -->
   <script src="script.js"></script>
 </body>
 </html>
