@@ -1,154 +1,132 @@
-// script.js — poprawione przejścia, historia (back) i obsługa "studio link"
-
-// Historia slajdów — używana przez przycisk "Wróć"
-const historyStack = [];
-
-// Zwraca id aktualnie widocznego slajdu
-function getCurrentSlideId() {
-  const active = document.querySelector('.slide.active');
-  return active ? active.id : null;
-}
-
-// Pokazuje slajd o podanym id
-// pushHistory = true -> zapisuje poprzedni slajd do historii (do back)
-function showSlide(id, pushHistory = true) {
-  const current = getCurrentSlideId();
-  if (!document.getElementById(id)) {
-    console.warn(`showSlide: slajd "${id}" nie istnieje.`);
-    return;
-  }
-  if (pushHistory && current) {
-    // nie pushujemy, jeśli już w historii ostatni jest ten sam
-    if (historyStack.length === 0 || historyStack[historyStack.length - 1] !== current) {
-      historyStack.push(current);
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8" />
+  <title>MNGame — VHS Night</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 50px auto;
+      line-height: 1.6;
+      background-color: #fafafa;
+      color: #222;
+      padding: 20px;
     }
-  }
 
-  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// Cofnij do poprzedniego slajdu (jeśli brak -> slide1)
-function goBack() {
-  const prev = historyStack.pop();
-  if (prev && document.getElementById(prev)) {
-    showSlide(prev, false); // nie dodajemy do historii
-  } else {
-    showSlide('slide1', false);
-  }
-}
-
-/* ----------------------
-   Przypięte wydarzenia
-   ---------------------- */
-
-// Przejścia podstawowe
-document.getElementById('toSlide2')?.addEventListener('click', () => showSlide('slide2'));
-document.getElementById('toSlide3')?.addEventListener('click', () => showSlide('slide3'));
-
-// Back buttons — wszystkie odwołują do funkcji goBack()
-document.querySelectorAll('.back-btn').forEach(btn => {
-  btn.addEventListener('click', (e) => {
-    e.preventDefault();
-    goBack();
-  });
-});
-
-// Tutorial
-document.getElementById('tutorial-btn')?.addEventListener('click', () => {
-  window.open('https://www.youtube.com/watch?v=7RBzlzVCM8E', '_blank');
-});
-
-/* ----------------------
-   Obsługa linku "VHS Night od SHABY STUDIO"
-   - jeśli w HTML to <a href="...">, zapobiegniemy domyślnemu przejściu
-   - zamiast tego pokażemy slide4 (VHS)
-   ---------------------- */
-const studioLink = document.getElementById('studioLink');
-if (studioLink) {
-  studioLink.addEventListener('click', (e) => {
-    // jeśli element ma href (jest <a>), zapobiegamy domyślnemu otwarciu
-    if (e.target.tagName.toLowerCase() === 'a' || studioLink.hasAttribute('href')) {
-      e.preventDefault();
+    header {
+      position: relative;
+      margin-bottom: 20px;
     }
-    showSlide('slide4');
-  });
-}
 
-/* ----------------------
-   Aktualizacje dla School Night (slide3)
-   Jeżeli w HTML nie ma slajdu aktualizacji dla slide3, dynamicznie go tworzymy
-   ID nowego slajdu: 'slide3updates'
-   ---------------------- */
-const updatesBtn = document.getElementById('updates-btn');
-if (updatesBtn) {
-  updatesBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    const updatesId = 'slide3updates';
-    if (!document.getElementById(updatesId)) {
-      // tworzymy prosty slajd z informacją i przyciskiem Wróć
-      const slide = document.createElement('section');
-      slide.className = 'slide';
-      slide.id = updatesId;
-      slide.innerHTML = `
-        <h1>School Night — Aktualizacje</h1>
-        <p>Brak nowych aktualizacji. Sprawdź później!</p>
-        <button class="back-btn" id="backFromSlide3">← Wróć</button>
-      `;
-      document.body.appendChild(slide);
-
-      // podpinać nasz handler dla nowego back buttona
-      document.getElementById('backFromSlide3').addEventListener('click', (ev) => {
-        ev.preventDefault();
-        goBack();
-      });
+    .studio-link {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #222;
+      color: #fff;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
     }
-    showSlide(updatesId);
-  });
-}
 
-/* ----------------------
-   VHS: przycisk "Aktualizacje" (na slide4) -> slide5 (jeśli istnieje)
-   VHS: link "Pobierz VHS Night" (na slide4) pozostawiamy jako normalny <a href>
-   (czyli otworzy mega w nowej karcie)
-   ---------------------- */
-document.getElementById('vhsUpdates')?.addEventListener('click', (e) => {
-  e.preventDefault();
-  if (document.getElementById('slide5')) {
-    showSlide('slide5');
-  } else {
-    // jeśli nie ma slide5 w HTML, twórzemy prosty komunikat (alternatywnie: alert)
-    const slide = document.createElement('section');
-    slide.className = 'slide';
-    slide.id = 'slide5';
-    slide.innerHTML = `
-      <h1>VHS Night — Aktualizacje</h1>
-      <p>Brak nowych aktualizacji dla VHS Night.</p>
-      <button class="back-btn" id="backFromVHS_dynamic">← Wróć</button>
-    `;
-    document.body.appendChild(slide);
-    document.getElementById('backFromVHS_dynamic').addEventListener('click', (ev) => {
-      ev.preventDefault();
-      goBack();
-    });
-    showSlide('slide5');
-  }
-});
+    .studio-link:hover { background-color: #444; }
 
-/* ----------------------
-   Uwaga: nie blokujemy linków które mają prowadzić na zewnątrz, np.
-   - pobierz na slajdzie 3 (id="downloadLink") -> ten link powinien mieć href i target="_blank"
-   - pobierz VHS na slajdzie 4 -> również zostawiony jako <a href> w HTML
-   Jeżeli chcesz by któryś z tych linków najpierw pokazywał slajd a dopiero potem przekierowywał,
-   daj znać — dopiszę to.
-   ---------------------- */
+    h1 { margin: 0 0 6px 0; }
+    h2 { margin: 0 0 10px 0; font-weight: 600; color: #333; }
 
-/* ----------------------
-   Dodatkowe zabezpieczenie:
-   - jeżeli coś zasłania przyciski (np. overlay), kliknięcia nadal powinny działać
-   - sprawdzamy, czy po wejściu na slide3 przycisk "Aktualizacje" jest klikalny
-   (to raczej kwestia CSS — upewnij się, że żaden element nie ma wysokiego z-index
-    i pointer-events: none)
-   ---------------------- */
+    .desc {
+      background: #fff;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.08);
+      margin-bottom: 18px;
+    }
 
-// Na koniec: upewnij się, że po załadowaniu jest widoczny slide1 (domyślnie w HTML ma klasę active)
+    .buttons { margin-top: 10px; }
+
+    .download-btn {
+      display: inline-block;
+      padding: 11px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background-color: #007bff;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 5px;
+    }
+
+    .download-btn:hover { background-color: #0056b3; }
+
+    /* --- SLIDES --- */
+    .slide { display: none; }
+    .slide.active { display: block; }
+
+    .back-btn {
+      background-color: #555;
+      color: white;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .back-btn:hover { background-color: #333; }
+
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1 -->
+  <section id="slide1" class="slide active">
+    <header>
+      <h1>MNGame przedstawia</h1>
+      <h2>School Night</h2>
+      <a class="studio-link" id="studioLink">VHS Night od SHABY STUDIO</a>
+    </header>
+
+    <section class="desc" aria-labelledby="desc-title">
+      <p id="desc-title"><strong>O grze</strong></p>
+      <p>W grze jesteś dzieciakiem, który utknął na weekend w szkole. Wszystko byłoby w porządku, gdyby nie to, że wszystkie drzwi są zamknięte, a budynek nawiedza potwór.</p>
+      <p>Twoim zadaniem jest uruchomić trzy generatory, znaleźć klucz i uciec stamtąd w ciągu dwóch dni — inaczej zginiesz.</p>
+    </section>
+
+    <div class="buttons">
+      <button class="download-btn" id="download-btn">Pobierz</button>
+      <button class="download-btn" id="tutorial-btn">Tutorial</button>
+      <a class="download-btn" href="https://discord.gg/qVRYthYAQM" target="_blank" rel="noopener noreferrer">Discord</a>
+    </div>
+  </section>
+
+  <!-- SLIDE 2 (School Night - wybór) -->
+  <section id="slide2" class="slide">
+    <h1>School Night</h1>
+    <button class="download-btn" id="schoolNightBtn">School Night</button>
+    <button class="back-btn">← Wróć</button>
+  </section>
+
+  <!-- SLIDE 3 (School Night - aktualizacje/pobierz) -->
+  <section id="slide3" class="slide">
+    <h1>School Night</h1>
+    <button class="download-btn" id="updates-btn">Aktualizacje</button>
+    <button class="download-btn" id="schoolDownload">Pobierz</button>
+    <button class="back-btn">← Wróć</button>
+  </section>
+
+  <!-- SLIDE 4 (VHS Night - aktualizacje/pobierz) -->
+  <section id="slide4" class="slide">
+    <h1>VHS Night</h1>
+    <button class="download-btn" id="vhsUpdates">Aktualizacje</button>
+    <button class="download-btn" id="vhsDownload">Pobierz</button>
+    <button class="back-btn">← Wróć</button>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
