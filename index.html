@@ -21,6 +21,7 @@
       box-sizing: border-box;
       text-align: center;
       transition: opacity 0.5s ease;
+      position: relative;
     }
 
     .active {
@@ -74,6 +75,24 @@
     .studio-link:hover {
       background-color: #444;
     }
+
+    .back-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .back-btn:hover {
+      background-color: #666;
+    }
   </style>
 </head>
 <body>
@@ -104,16 +123,17 @@
   <section class="slide" id="slide2">
     <h1>School Night</h1>
     <button class="download-btn" id="toSlide3">School Night</button>
+    <button class="back-btn" id="backTo1">← Wróć</button>
   </section>
 
   <!-- SLIDE 3 -->
   <section class="slide" id="slide3">
     <h1>School Night — Pobierz</h1>
-    <button class="download-btn">Aktualizacje</button>
+    <button class="download-btn" id="updates-btn">Aktualizacje</button>
     <a class="download-btn" href="https://mega.nz/fm/PVM0DDKC" target="_blank">Pobierz</a>
+    <button class="back-btn" id="backTo2">← Wróć</button>
   </section>
 
-  <!-- podłączamy zewnętrzny skrypt -->
   <script src="script.js"></script>
 </body>
 </html>
