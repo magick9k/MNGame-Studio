@@ -70,6 +70,7 @@
       text-decoration: none;
       font-weight: 700;
       font-size: 14px;
+      cursor: pointer;
     }
 
     .studio-link:hover {
@@ -101,12 +102,9 @@
   <section class="slide active" id="slide1">
     <h1>MNGame przedstawia</h1>
     <h2>School Night</h2>
-    <a class="studio-link"
-       href="https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw"
-       target="_blank"
-       rel="noopener noreferrer">
+    <div id="studioLink" class="studio-link">
       VHS Night od SHABY STUDIO
-    </a>
+    </div>
 
     <div class="desc">
       <p><strong>O grze:</strong></p>
@@ -130,8 +128,24 @@
   <section class="slide" id="slide3">
     <h1>School Night — Pobierz</h1>
     <button class="download-btn" id="updates-btn">Aktualizacje</button>
-    <a class="download-btn" href="https://mega.nz/fm/PVM0DDKC" target="_blank">Pobierz</a>
+    <a class="download-btn" id="downloadLink" href="https://mega.nz/fm/PVM0DDKC" target="_blank">Pobierz</a>
     <button class="back-btn" id="backTo2">← Wróć</button>
+  </section>
+
+  <!-- SLIDE 4 - VHS STUDIO -->
+  <section class="slide" id="slide4">
+    <h1>VHS Night — SHABY STUDIO</h1>
+    <p>Projekt poboczny od twórców School Night. Kliknij, aby pobrać lub zobaczyć aktualizacje.</p>
+    <a class="download-btn" href="https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw" target="_blank">Pobierz VHS Night</a>
+    <button class="download-btn" id="vhsUpdates">Aktualizacje</button>
+    <button class="back-btn" id="backToMain">← Wróć</button>
+  </section>
+
+  <!-- SLIDE 5 - VHS UPDATES -->
+  <section class="slide" id="slide5">
+    <h1>VHS Night — Aktualizacje</h1>
+    <p>Brak nowych aktualizacji. Sprawdź później!</p>
+    <button class="back-btn" id="backToVHS">← Wróć</button>
   </section>
 
   <script src="script.js"></script>
