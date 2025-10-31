@@ -1,103 +1,53 @@
-// ------------------------------
-//  SYSTEM SLIDE’ÓW I HISTORII
-// ------------------------------
-
+// Prosty system slajdów
 const historyStack = [];
 
-// Pokazuje wybrany slajd
 function showSlide(id, pushHistory = true) {
-  const current = document.querySelector(".slide.active");
+  const current = document.querySelector('.slide.active');
   const next = document.getElementById(id);
-
-  if (!next) {
-    console.error(`Nie znaleziono slajdu o id: ${id}`);
-    return;
-  }
+  if (!next) return;
 
   if (pushHistory && current) {
     historyStack.push(current.id);
   }
 
-  document.querySelectorAll(".slide").forEach(slide => slide.classList.remove("active"));
-  next.classList.add("active");
+  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+  next.classList.add('active');
 }
 
-// Wróć do poprzedniego slajdu
 function goBack() {
   const prev = historyStack.pop();
-  if (prev) {
-    showSlide(prev, false);
-  } else {
-    showSlide("slide1", false);
-  }
+  if (prev) showSlide(prev, false);
+  else showSlide('slide1', false);
 }
 
-// ------------------------------
-//  PODSTAWOWE PRZYCISKI
-// ------------------------------
+// --- GŁÓWNE PRZYCISKI ---
+document.getElementById('download-btn').addEventListener('click', () => showSlide('slide2'));
+document.getElementById('tutorial-btn').addEventListener('click', () => {
+  window.open('https://www.youtube.com/watch?v=7RBzlzVCM8E', '_blank');
+});
 
-// Przycisk "Pobierz" z pierwszego slajdu → przejście do School Night
-const downloadBtn = document.getElementById("download-btn");
-if (downloadBtn) {
-  downloadBtn.addEventListener("click", () => showSlide("slide2"));
-}
+// --- SCHOOL NIGHT ---
+document.getElementById('schoolNightBtn').addEventListener('click', () => showSlide('slide3'));
+document.getElementById('schoolDownload').addEventListener('click', () => {
+  window.open('https://mega.nz/fm/PVM0DDKC', '_blank');
+});
+document.getElementById('updates-btn').addEventListener('click', () => {
+  alert('Brak nowych aktualizacji.');
+});
 
-// Przycisk "Tutorial"
-const tutorialBtn = document.getElementById("tutorial-btn");
-if (tutorialBtn) {
-  tutorialBtn.addEventListener("click", () => {
-    window.open("https://www.youtube.com/watch?v=7RBzlzVCM8E", "_blank");
-  });
-}
+// --- VHS NIGHT ---
+document.getElementById('studioLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  showSlide('slide4');
+});
+document.getElementById('vhsDownload').addEventListener('click', () => {
+  window.open('https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw', '_blank');
+});
+document.getElementById('vhsUpdates').addEventListener('click', () => {
+  alert('Brak nowych aktualizacji dla VHS Night.');
+});
 
-// Link "VHS Night od SHABY STUDIO" → przejście do slide4
-const studioLink = document.getElementById("studioLink");
-if (studioLink) {
-  studioLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    showSlide("slide4");
-  });
-}
-
-// ------------------------------
-//  SCHOOL NIGHT — SLIDE 2
-// ------------------------------
-
-// Przycisk "Pobierz School Night" → otwiera Mega
-const schoolDownloadBtn = document.getElementById("schoolDownload");
-if (schoolDownloadBtn) {
-  schoolDownloadBtn.addEventListener("click", () => {
-    window.open("https://mega.nz/fm/PVM0DDKC", "_blank");
-  });
-}
-
-// Przycisk "Aktualizacje" → przejście do slide3
-const updatesBtn = document.getElementById("updates-btn");
-if (updatesBtn) {
-  updatesBtn.addEventListener("click", () => showSlide("slide3"));
-}
-
-// ------------------------------
-//  VHS NIGHT — SLIDE 4
-// ------------------------------
-
-// Przycisk "Pobierz VHS Night" → otwiera Mega
-const vhsDownloadBtn = document.getElementById("vhsDownload");
-if (vhsDownloadBtn) {
-  vhsDownloadBtn.addEventListener("click", () => {
-    window.open("https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw", "_blank");
-  });
-}
-
-// Przycisk "Aktualizacje" → slide5
-const vhsUpdatesBtn = document.getElementById("vhsUpdates");
-if (vhsUpdatesBtn) {
-  vhsUpdatesBtn.addEventListener("click", () => showSlide("slide5"));
-}
-
-// ------------------------------
-//  PRZYCISKI WRÓĆ (DZIAŁAJĄ WSZĘDZIE)
-// ------------------------------
-document.querySelectorAll(".back-btn").forEach(btn => {
-  btn.addEventListener("click", () => goBack());
+// --- BACK BUTTONS ---
+document.querySelectorAll('.back-btn').forEach(btn => {
+  btn.addEventListener('click', () => goBack());
 });
