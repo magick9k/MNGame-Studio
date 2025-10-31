@@ -1,4 +1,4 @@
-// Prosty system slajdów
+// System slajdów
 const historyStack = [];
 
 function showSlide(id, pushHistory = true) {
@@ -6,9 +6,7 @@ function showSlide(id, pushHistory = true) {
   const next = document.getElementById(id);
   if (!next) return;
 
-  if (pushHistory && current) {
-    historyStack.push(current.id);
-  }
+  if (pushHistory && current) historyStack.push(current.id);
 
   document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
   next.classList.add('active');
@@ -20,22 +18,22 @@ function goBack() {
   else showSlide('slide1', false);
 }
 
-// --- GŁÓWNE PRZYCISKI ---
+// --- Główne przyciski ---
 document.getElementById('download-btn').addEventListener('click', () => showSlide('slide2'));
 document.getElementById('tutorial-btn').addEventListener('click', () => {
   window.open('https://www.youtube.com/watch?v=7RBzlzVCM8E', '_blank');
 });
 
-// --- SCHOOL NIGHT ---
+// --- School Night ---
 document.getElementById('schoolNightBtn').addEventListener('click', () => showSlide('slide3'));
 document.getElementById('schoolDownload').addEventListener('click', () => {
   window.open('https://mega.nz/fm/PVM0DDKC', '_blank');
 });
 document.getElementById('updates-btn').addEventListener('click', () => {
-  alert('Brak nowych aktualizacji.');
+  alert('Brak nowych aktualizacji dla School Night.');
 });
 
-// --- VHS NIGHT ---
+// --- VHS Night ---
 document.getElementById('studioLink').addEventListener('click', (e) => {
   e.preventDefault();
   showSlide('slide4');
@@ -43,11 +41,9 @@ document.getElementById('studioLink').addEventListener('click', (e) => {
 document.getElementById('vhsDownload').addEventListener('click', () => {
   window.open('https://mega.nz/folder/JFxWmBYR#vl3CXHMW_NCAP0Fcw7NVcw', '_blank');
 });
-document.getElementById('vhsUpdates').addEventListener('click', () => {
-  alert('Brak nowych aktualizacji dla VHS Night.');
-});
+document.getElementById('vhsUpdates').addEventListener('click', () => showSlide('slide5'));
 
-// --- BACK BUTTONS ---
+// --- Back Buttons ---
 document.querySelectorAll('.back-btn').forEach(btn => {
   btn.addEventListener('click', () => goBack());
 });
