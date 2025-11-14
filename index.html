@@ -15,42 +15,65 @@
       <a class="studio-link" id="studioLink">VHS Night od SHABY STUDIO</a>
     </header>
 
-    <section class="desc">
-      <p><strong>O grze</strong></p>
-      <p>W grze jesteś dzieciakiem, który utknął na weekend w szkole...</p>
+    <section class="desc" aria-labelledby="desc-title">
+      <p id="desc-title"><strong>O grze</strong></p>
+      <p>W grze jesteś dzieciakiem, który utknął na weekend w szkole. Wszystko byłoby w porządku, gdyby nie to, że wszystkie drzwi są zamknięte, a budynek nawiedza potwór.</p>
+      <p>Twoim zadaniem jest uruchomić trzy generatory, znaleźć klucz i uciec stamtąd w ciągu dwóch dni — inaczej zginiesz.</p>
     </section>
 
     <div class="buttons">
       <button class="download-btn" id="download-btn">Pobierz</button>
       <button class="download-btn" id="tutorial-btn">Tutorial</button>
-      <a class="download-btn" href="https://discord.gg/qVRYthYAQM" target="_blank">Discord</a>
+      <a class="download-btn" href="https://discord.gg/qVRYthYAQM" target="_blank" rel="noopener noreferrer">Discord</a>
     </div>
   </section>
 
-  <!-- SLIDE 2 – lista gier -->
+  <!-- SLIDE 2 (School Night - wybór) -->
   <section id="slide2" class="slide">
-    <h1>Wybierz grę</h1>
-    <button class="download-btn gameSelect" data-game="school">School Night</button>
-    <button class="download-btn gameSelect" data-game="vhs">VHS Night</button>
+    <h1>School Night</h1>
+    <button class="download-btn" id="schoolNightBtn">School Night</button>
     <button class="back-btn">← Wróć</button>
   </section>
 
-  <!-- SLIDE 3 – widok gry -->
+  <!-- SLIDE 3 (School Night - NOWY WYGLĄD) -->
   <section id="slide3" class="slide gameView">
 
     <div class="leftPanel">
-      <h2 id="gameTitle">Nazwa gry</h2>
+      <h2>School Night</h2>
 
-      <button class="side-btn" id="gameNews">Aktualności</button>
-      <button class="side-btn" id="gameDownload">Pobierz</button>
+      <button class="side-btn" id="updates-btn">Aktualności</button>
+      <button class="side-btn" id="schoolDownload">Pobierz</button>
 
       <button class="back-btn sideBack">← Wróć</button>
     </div>
 
     <div class="rightPanel">
-      <div id="gameContent">Wybierz opcję po lewej stronie.</div>
+      <div id="updatesBox">Wybierz opcję po lewej stronie.</div>
     </div>
 
+  </section>
+
+  <!-- SLIDE 4 (VHS Night - wybór) -->
+  <section id="slide4" class="slide">
+    <h1>VHS Night</h1>
+    <button class="download-btn" id="vhsUpdates">Aktualizacje</button>
+    <button class="download-btn" id="vhsDownload">Pobierz</button>
+    <button class="back-btn">← Wróć</button>
+  </section>
+
+  <!-- SLIDE 5 (VHS Night - aktualizacje) -->
+  <section id="slide5" class="slide">
+    <h1>VHS Night — Aktualizacje</h1>
+    <div id="vhsUpdatesBox">
+      <p><strong>Wersja 0.4.0</strong></p>
+      <ul>
+        <li>Dodano mądrzejsze NPC.</li>
+        <li>Naprawiono system strzelania.</li>
+        <li>Dodano ustawienia gry.</li>
+        <li>Pokonanie NPC wymaga teraz jednego lub dwóch strzałów.</li>
+      </ul>
+    </div>
+    <button class="back-btn">← Wróć</button>
   </section>
 
   <script src="script.js"></script>
